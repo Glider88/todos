@@ -1,0 +1,6 @@
+addSbtPlugin("au.com.onegeek" % "sbt-dotenv" % "2.1.204")
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.20")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.9.32")
+addSbtPlugin("ch.epfl.scala" % "sbt-bloop" % "1.4.11")
+addSbtPlugin("io.spray" % "sbt-revolver" % "0.9.1")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.3")

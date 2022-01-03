@@ -1,0 +1,4 @@
+CREATE TABLE todo (
+  id  UUID PRIMARY KEY,
+  title VARCHAR(50) NOT NULL
+);
