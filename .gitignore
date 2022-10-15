@@ -31,6 +31,7 @@
 
 # vscode
 /.vscode
+/.history
 
 # Standard symbolic link to build/quick/bin
 /qbin
@@ -53,3 +54,4 @@ jitwatch.out
 .metals
 .bloop
 project/**/metals.sbt
+.bsp
