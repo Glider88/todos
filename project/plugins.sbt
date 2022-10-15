@@ -1,4 +1,4 @@
-addSbtPlugin("au.com.onegeek" % "sbt-dotenv" % "2.1.204")
+addSbtPlugin("nl.gn0s1s" % "sbt-dotenv" % "3.0.0")
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.20")
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.9.32")
 addSbtPlugin("ch.epfl.scala" % "sbt-bloop" % "1.4.11")
