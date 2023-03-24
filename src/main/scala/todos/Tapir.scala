@@ -23,7 +23,7 @@ object Tapir extends TapirCodecRefined {
     query[Option[Long]]("limit")
       .description("Maximum number of books to retrieve")
 
-  val token: PublicEndpoint[AuthRequest, String, AuthResponse, Any] = 
+  val token: PublicEndpoint[AuthRequest, String, AuthResponse, Any] =
     endpoint
       .post
       .in("auth")
@@ -37,21 +37,21 @@ object Tapir extends TapirCodecRefined {
       .out(jsonBody[AuthResponse])
       .errorOut(stringBody)
 
-  val listing: PublicEndpoint[Option[Long], String, List[Todo], Any] = 
+  val listing: PublicEndpoint[Option[Long], String, List[Todo], Any] =
     baseEndpoint
       .get
       .in("list" / "all")
       .in(limitParameter)
       .out(jsonBody[List[Todo]])
 
-  val find: PublicEndpoint[UUID, String, Todo, Any] = 
+  val find: PublicEndpoint[UUID, String, Todo, Any] =
     baseEndpoint
       .get
       .in("find")
       .in(path[UUID]("id"))
       .out(jsonBody[Todo])
 
-  val authAdd: Endpoint[JwtToken, NewTodo, String, NewTodoResponse, Any] = 
+  val authAdd: Endpoint[JwtToken, NewTodo, String, NewTodoResponse, Any] =
     endpoint
       .post
       .in("todos")

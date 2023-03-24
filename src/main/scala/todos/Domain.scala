@@ -3,8 +3,8 @@ package todos
 import derevo.Derivation
 import derevo.NewTypeDerivation
 import derevo.cats._
-import derevo.circe.magnolia.decoder
-import derevo.circe.magnolia.encoder
+import derevo.circe.decoder
+import derevo.circe.encoder
 import derevo.derive
 import io.estatico.newtype.macros.newtype
 import monocle.Iso
