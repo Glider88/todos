@@ -1,25 +1,25 @@
 package todos
 
-import cats.effect._
-import cats.syntax.all._
-import eu.timepit.refined.auto._
-import org.http4s._
-import org.http4s.server.middleware.{Logger => LoggerMiddleware}
+import cats.effect.*
+import cats.syntax.all.*
+import eu.timepit.refined.auto.*
+import org.http4s.*
+import org.http4s.server.middleware.{Logger as LoggerMiddleware}
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import todos.auth.AuthRequest
 import todos.auth.AuthResponse
 import todos.auth.JwtToken
-import todos.todo._
-import todos.user._
+import todos.todo.*
+import todos.user.*
 import sttp.tapir.server.http4s.Http4sServerInterpreter
 import sttp.tapir.swagger.bundle.SwaggerInterpreter
 
 import java.util.UUID
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 
-object Http4s {
-  def mkHttpApp[F[_]](todos: Todos[F], users: Users[F], jwt: Jwt)(implicit F: Async[F]): HttpApp[F] = {
+object Http4s:
+  def mkHttpApp[F[_]](todos: Todos[F], users: Users[F], jwt: Jwt)(implicit F: Async[F]): HttpApp[F] =
     implicit def unsafeLogger[G[_]: Sync]: SelfAwareStructuredLogger[G] = Slf4jLogger.getLogger[G]
 
     val listing: HttpRoutes[F] =
@@ -34,13 +34,12 @@ object Http4s {
     def auth(token: JwtToken): F[Either[String, User]] =
       Logger[F].info(s"Authentication for token: $token") *>
       {
-        jwt.userId(token) match {
+        jwt.userId(token) match
           case Right(uuid) => users.findUserById(uuid).map(_ match {
             case Some(u) => Right(u)
             case None => Left("no user")
           })
           case Left(error) => F.pure(Left(error.toString))
-        }
       }
 
     val authAdd: HttpRoutes[F] =
@@ -56,13 +55,11 @@ object Http4s {
           )
       )
 
-    def verify(request: AuthRequest, user: User): Either[String, AuthResponse] = {
-      if (Security.verify(user.password, request.password)) {
+    def verify(request: AuthRequest, user: User): Either[String, AuthResponse] =
+      if (Security.verify(user.password, request.password))
         Right(AuthResponse(jwt.token(user.id)))
-      } else {
+      else
         Left("Incorrect token")
-      }
-    }
 
     val token: HttpRoutes[F] =
       Http4sServerInterpreter[F]().toRoutes(
@@ -101,5 +98,3 @@ object Http4s {
 
     val routes = (listing <+> find <+> swagger <+> token <+> authAdd).orNotFound
     logger(routes)
-  }
-}

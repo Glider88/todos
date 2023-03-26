@@ -3,9 +3,9 @@ package todos
 import doobie.util.transactor.Transactor
 import cats.effect.kernel.Async
 import todos.Configuration.PostgresConfig
-import eu.timepit.refined.auto._
+import eu.timepit.refined.auto.*
 
-object Doobie {
+object Doobie:
   def transactor[F[_]: Async](cfg: PostgresConfig): Transactor[F] =
     Transactor.fromDriverManager[F](
       cfg.driver,
@@ -13,4 +13,3 @@ object Doobie {
       cfg.user,
       cfg.pass.value
     )
-}

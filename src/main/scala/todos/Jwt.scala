@@ -5,11 +5,11 @@ import java.time.Instant
 import Configuration.AppConfig
 import io.circe.Json
 import java.util.UUID
-import eu.timepit.refined.auto._
+import eu.timepit.refined.auto.*
 import todos.auth.JwtToken
-import todos.todo._
-import todos.user._
-import cats.syntax.all._
+import todos.todo.*
+import todos.user.*
+import cats.syntax.all.*
 
 class Jwt(cfg: AppConfig) {
   private val secret = cfg.jwtSecretKey
@@ -23,13 +23,12 @@ class Jwt(cfg: AppConfig) {
     json(token)
       .flatMap(_.hcursor.get[UUID]("sub"))
 
-  def token(userId: UserId, ttl: Long = 300L): JwtToken = {
+  def token(userId: UserId, ttl: Long = 300L): JwtToken =
     val claim = JwtClaim(
-      expiration = Some(Instant.now.plusSeconds(ttl).getEpochSecond),
-      issuedAt = Some(Instant.now.getEpochSecond),
+      expiration = Some(Instant.now.nn.plusSeconds(ttl).nn.getEpochSecond),
+      issuedAt = Some(Instant.now.nn.getEpochSecond),
       subject = Some(userId.toString)
     )
 
     JwtCirce.encode(claim, cfg.jwtSecretKey.value, JwtAlgorithm.HS256)
-  }
 }

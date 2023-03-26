@@ -20,6 +20,10 @@
 /out/
 /bin/
 /sandbox/
+.scala-build/
+.scala/
+*.worksheet.sc
+.ammonite/
 
 # intellij
 /src/intellij*/*.iml
@@ -54,4 +58,5 @@ jitwatch.out
 .metals
 .bloop
 project/**/metals.sbt
+metals.sbt
 .bsp

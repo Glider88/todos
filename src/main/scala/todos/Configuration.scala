@@ -1,13 +1,13 @@
 package todos
 
-import cats.implicits._
+import cats.implicits.*
 import eu.timepit.refined.types.string.NonEmptyString
-import eu.timepit.refined.auto._
-import eu.timepit.refined.cats._
-import ciris._
-import ciris.refined._
+import eu.timepit.refined.auto.*
+import eu.timepit.refined.cats.*
+import ciris.*
+import ciris.refined.*
 
-object Configuration {
+object Configuration:
   case class PostgresConfig(
     driver: NonEmptyString,
     url: NonEmptyString,
@@ -22,7 +22,7 @@ object Configuration {
     jwtSecretKey: Secret[NonEmptyString]
   )
 
-  def config(): ConfigValue[Effect, AppConfig] = {
+  def config(): ConfigValue[Effect, AppConfig] =
     (
       env("POSTGRES_USERNAME").as[NonEmptyString],
       env("POSTGRES_PASSWORD").as[NonEmptyString].secret,
@@ -40,5 +40,3 @@ object Configuration {
         jwt_secret
       )
     }
-  }
-}

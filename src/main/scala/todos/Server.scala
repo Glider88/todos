@@ -1,11 +1,11 @@
 package todos
 
-import cats.effect._
-import com.comcast.ip4s._
+import cats.effect.*
+import com.comcast.ip4s.*
 import org.http4s.HttpApp
 import org.http4s.ember.server.EmberServerBuilder
 
-object Server {
+object Server:
   def ember(httpApp: HttpApp[IO]): IO[ExitCode] =
     EmberServerBuilder.default[IO]
       .withHttpApp(httpApp)
@@ -14,4 +14,3 @@ object Server {
       .build
       .use(_ => IO.never)
       .as(ExitCode.Success)
-}

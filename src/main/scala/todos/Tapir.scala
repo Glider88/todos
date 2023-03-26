@@ -1,18 +1,19 @@
 package todos
 
-import eu.timepit.refined.auto._
-import todos.auth._
-import todos.todo._
-import todos.user._
-import sttp.tapir._
+import eu.timepit.refined.auto.*
+import todos.auth.*
+import todos.todo.*
+import todos.user.*
+import sttp.tapir.*
 import sttp.tapir.codec.refined.TapirCodecRefined
-import sttp.tapir.generic.auto._
-import sttp.tapir.json.circe._
+import sttp.tapir.generic.auto.*
+import sttp.tapir.json.circe.*
 
 import java.util.UUID
-import io.circe.generic.auto._
+import io.circe.generic.auto.*
+import scala.language.unsafeNulls
 
-object Tapir extends TapirCodecRefined {
+object Tapir extends TapirCodecRefined:
   private val baseEndpoint =
     endpoint
       .errorOut(stringBody)
@@ -30,7 +31,7 @@ object Tapir extends TapirCodecRefined {
         jsonBody[AuthRequest]
           .description("getting auth token")
           .example(
-            AuthRequest(UUID.fromString("2c0902c8-2314-41a1-8351-5f74eb473f96"), "pass1")
+            AuthRequest(UUID.fromString("2c0902c8-2314-41a1-8351-5f74eb473f96").nn, "pass1")
           )
       )
       .out(jsonBody[AuthResponse])
@@ -65,4 +66,3 @@ object Tapir extends TapirCodecRefined {
       )
       .errorOut(stringBody)
       .out(jsonBody[NewTodoResponse])
-}
