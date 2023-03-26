@@ -14,7 +14,7 @@ class Todos[F[_]: Async](postgres: Transactor[F]) {
 
   implicit val todoRead: Read[Todo] =
     Read[(UUID, String)].map {
-      case (id, title) => new Todo(TodoId(id), TodoTitle(title))
+      case (id, title) => new Todo(id, title)
     }
 
   def findAll(limit: Option[Long]): F[List[Todo]] = {
@@ -35,7 +35,7 @@ class Todos[F[_]: Async](postgres: Transactor[F]) {
 
   def add(todo: NewTodo): F[UUID] = {
     def insert(uuid: UUID): F[Unit] =
-      sql"INSERT INTO todo(id, title) VALUES($uuid, ${todo.title.value})"
+      sql"INSERT INTO todo(id, title) VALUES($uuid, $todo)"
         .update
         .run
         .void

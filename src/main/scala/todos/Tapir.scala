@@ -1,17 +1,16 @@
 package todos
 
 import eu.timepit.refined.auto._
-import io.circe.generic.auto._
 import todos.auth._
 import todos.todo._
 import todos.user._
 import sttp.tapir._
-import sttp.tapir.codec.newtype._
 import sttp.tapir.codec.refined.TapirCodecRefined
 import sttp.tapir.generic.auto._
 import sttp.tapir.json.circe._
 
 import java.util.UUID
+import io.circe.generic.auto._
 
 object Tapir extends TapirCodecRefined {
   private val baseEndpoint =
@@ -31,7 +30,7 @@ object Tapir extends TapirCodecRefined {
         jsonBody[AuthRequest]
           .description("getting auth token")
           .example(
-            AuthRequest(UserName("2c0902c8-2314-41a1-8351-5f74eb473f96"), Password("pass1"))
+            AuthRequest(UUID.fromString("2c0902c8-2314-41a1-8351-5f74eb473f96"), "pass1")
           )
       )
       .out(jsonBody[AuthResponse])
@@ -61,7 +60,7 @@ object Tapir extends TapirCodecRefined {
         jsonBody[NewTodo]
           .description("new todo")
           .example(
-            NewTodo(TodoTitle("First todo"))
+            NewTodo("First todo")
           )
       )
       .errorOut(stringBody)

@@ -30,13 +30,13 @@ object Configuration {
     ).parMapN { (username, password, jwt_secret) =>
       AppConfig(
         PostgresConfig(
-          driver = "org.postgresql.Driver",
-          url = "jdbc:postgresql:test",
+          driver = NonEmptyString.unsafeFrom("org.postgresql.Driver"),
+          url = NonEmptyString.unsafeFrom("jdbc:postgresql:test"),
           user = username,
           pass = password
         ),
-        "migrations",
-        "src/main/resources",
+        NonEmptyString.unsafeFrom("migrations"),
+        NonEmptyString.unsafeFrom("src/main/resources"),
         jwt_secret
       )
     }

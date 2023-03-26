@@ -16,10 +16,11 @@ import sttp.tapir.server.http4s.Http4sServerInterpreter
 import sttp.tapir.swagger.bundle.SwaggerInterpreter
 
 import java.util.UUID
+import org.typelevel.log4cats.SelfAwareStructuredLogger
 
 object Http4s {
   def mkHttpApp[F[_]](todos: Todos[F], users: Users[F], jwt: Jwt)(implicit F: Async[F]): HttpApp[F] = {
-    implicit def unsafeLogger[G[_]: Sync] = Slf4jLogger.getLogger[G]
+    implicit def unsafeLogger[G[_]: Sync]: SelfAwareStructuredLogger[G] = Slf4jLogger.getLogger[G]
 
     val listing: HttpRoutes[F] =
       Http4sServerInterpreter[F]().toRoutes(
@@ -68,7 +69,7 @@ object Http4s {
         Tapir
           .token
           .serverLogic((req: AuthRequest) => {
-            users.findUserById(UUID.fromString(req.username.show)).map {
+            users.findUserById(req.userId).map {
               case Some(u) => verify(req, u) match {
                 case r @ Right(_) => r
                 case l @ Left(_) => l

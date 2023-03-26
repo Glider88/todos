@@ -3,7 +3,7 @@ POST  http://0.0.0.0:8080/auth HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "2c0902c8-2314-41a1-8351-5f74eb473f96",
+  "userId": "2c0902c8-2314-41a1-8351-5f74eb473f96",
   "password": "pass1"
 }
 ###

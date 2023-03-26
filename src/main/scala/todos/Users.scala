@@ -10,14 +10,13 @@ import todos.user.EncryptedPassword
 import todos.user.User
 import todos.user.UserId
 import todos.user.UserName
-
 import java.util.UUID
 
 class Users[F[_]: Async](postgres: Transactor[F]) {
   implicit val userRead: Read[User] =
     Read[(UUID, String, String)].map {
       case (id, name, pass) =>
-        new User(UserId(id), UserName(name), EncryptedPassword(pass))
+        new User(id, name, pass)
     }
 
   def findUserById(id: UUID): F[Option[User]] = {

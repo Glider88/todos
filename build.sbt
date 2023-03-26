@@ -1,7 +1,7 @@
 import Dependencies._
 import complete.DefaultParsers._
 
-ThisBuild / scalaVersion     := "2.13.10" // 3.2.2
+ThisBuild / scalaVersion     := "3.2.2" // 2.13.10
 ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "com.todos"
 ThisBuild / organizationName := "todos"
@@ -32,7 +32,7 @@ fork / runMigrate := true
 lazy val root = (project in file("."))
   .settings(
     name := "polygon",
-    scalacOptions ++= List("-Ymacro-annotations"),
+    // scalacOptions ++= List("-explain"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.15" % Test,
       "org.typelevel" %% "cats-effect" % "3.4.8",
@@ -58,24 +58,24 @@ lazy val root = (project in file("."))
       "org.typelevel" %% "log4cats-core"    % "2.5.0",
       "org.typelevel" %% "log4cats-slf4j"   % "2.5.0",
       "ch.qos.logback" % "logback-classic" % "1.4.6",
-      "io.estatico" %% "newtype" % "0.4.4",
+      // "io.estatico" %% "newtype" % "0.4.4",
       "eu.timepit" %% "refined"          % "0.10.3",
       "eu.timepit" %% "refined-cats"     % "0.10.3",
       "io.circe"   %% "circe-refined"    % circeVersion,
       "is.cir"     %% "ciris-refined"    % "3.1.0",
       "org.tpolecat"  %% "doobie-refined" % doobieVersion,
-      "tf.tofu" %% "derevo-core" % derevoVersion,
-      "tf.tofu" %% "derevo-cats" % derevoVersion,
-      "tf.tofu" %% "derevo-circe" % derevoVersion excludeAll(
-        ExclusionRule("io.circe", "circe-derivation_2.13")
-      ),
-      "io.circe" %% "circe-derivation" % "0.13.0-M5" excludeAll(
-        ExclusionRule("io.circe", "circe-core_2.13")
-      ),
+      // "tf.tofu" %% "derevo-core" % derevoVersion,
+      // "tf.tofu" %% "derevo-cats" % derevoVersion,
+      // "tf.tofu" %% "derevo-circe" % derevoVersion excludeAll(
+        // ExclusionRule("io.circe", "circe-derivation_2.13")
+      // ),
+      // "io.circe" %% "circe-derivation" % "0.13.0-M5" excludeAll(
+        // ExclusionRule("io.circe", "circe-core_2.13")
+      // ),
       "dev.optics" %% "monocle-core"  % "3.2.0",
       "dev.optics" %% "monocle-macro" % "3.2.0",
       "com.softwaremill.sttp.tapir" %% "tapir-refined" % tapirVersion,
-      "com.softwaremill.sttp.tapir" %% "tapir-newtype" % tapirVersion,
-      "com.softwaremill.sttp.tapir" %% "tapir-derevo" % tapirVersion,
+      // "com.softwaremill.sttp.tapir" %% "tapir-newtype" % tapirVersion,
+      // "com.softwaremill.sttp.tapir" %% "tapir-derevo" % tapirVersion,
     )
   )
