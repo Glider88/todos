@@ -22,6 +22,16 @@ lazy val root =
     .in(file("."))
     .settings(name := "polygon")
     .settings(commonSettings)
+    .settings(
+      assembly / mainClass := Some("todos.Main"),
+      assembly / assemblyJarName := "polygon.jar",
+      ThisBuild / assemblyMergeStrategy := {
+        case PathList(ps @ _*) if ps.last endsWith ".class" => MergeStrategy.first
+        case x =>
+          val oldStrategy = (ThisBuild / assemblyMergeStrategy).value
+          oldStrategy(x)
+      }
+    )
     .settings(dependencies)
 
 lazy val commonSettings = {
