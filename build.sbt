@@ -35,7 +35,8 @@ lazy val commonSettings = {
   )
 
   lazy val otherCommonSettings = Seq(
-    update / evictionWarningOptions := EvictionWarningOptions.empty
+    update / evictionWarningOptions := EvictionWarningOptions.empty,
+    Compile / run / fork := true,
   )
 
   Seq(
