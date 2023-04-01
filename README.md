@@ -19,5 +19,20 @@ Start webserver:
 
     sbt "runMain todos.Main"
 
-Examples of api requests in the file **polygon.http**
+Make fat jar:
 
+    sbt assembly
+
+Build docker image:
+
+    sbt docker
+
+Run app in docker:
+
+    docker run -it \
+    -e POSTGRES_USERNAME=pavel \
+    -e POSTGRES_PASSWORD=pass \
+    -e JWT_SECRET_KEY=secret-key \
+    com.todos/polygon
+
+Examples of api requests in the file **polygon.http**

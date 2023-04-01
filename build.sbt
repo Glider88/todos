@@ -4,6 +4,10 @@ ThisBuild / scalaVersion     := "3.2.2"
 ThisBuild / organization     := "com.todos"
 ThisBuild / organizationName := "todos"
 
+enablePlugins(
+  DockerPlugin,
+)
+
 ThisBuild / scalacOptions ++=
   Seq(
     "-deprecation",
@@ -26,11 +30,32 @@ lazy val root =
       assembly / mainClass := Some("todos.Main"),
       assembly / assemblyJarName := "polygon.jar",
       ThisBuild / assemblyMergeStrategy := {
+        // fix swagger-tapir: https://tapir.softwaremill.com/en/latest/docs/openapi.html#using-swaggerui-with-sbt-assembly
+        case PathList("META-INF", "maven", "org.webjars", "swagger-ui", "pom.properties") =>
+          MergeStrategy.singleOrError
         case PathList(ps @ _*) if ps.last endsWith ".class" => MergeStrategy.first
         case x =>
           val oldStrategy = (ThisBuild / assemblyMergeStrategy).value
           oldStrategy(x)
       }
+    )
+    .settings(
+      docker / dockerfile := {
+        // The assembly task generates a fat JAR file
+        val artifact: File = assembly.value
+        val artifactTargetPath = s"/app/${artifact.name}"
+
+        new Dockerfile {
+          from("openjdk:19")
+          add(artifact, artifactTargetPath)
+          entryPoint("java", "-jar", artifactTargetPath)
+        }
+      },
+      docker / buildOptions := BuildOptions(
+        cache = false,
+        // removeIntermediateContainers = BuildOptions.Remove.Always,
+        // pullBaseImage = BuildOptions.Pull.Always,
+      )
     )
     .settings(dependencies)
 
