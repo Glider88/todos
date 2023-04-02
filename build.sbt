@@ -57,6 +57,9 @@ lazy val root =
         // pullBaseImage = BuildOptions.Pull.Always,
       )
     )
+    .settings(
+      ThisBuild / envFileName := ".envrc"
+    )
     .settings(dependencies)
 
 lazy val commonSettings = {

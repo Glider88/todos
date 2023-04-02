@@ -1,12 +1,12 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "configurations": [
     {
       "type": "scala",
       "request": "launch",
       "name": "todos",
       "mainClass": "todos.Main",
-      "envFile": "${workspaceFolder}/.env",
+      "envFile": "${workspaceFolder}/.envrc",
       "args": [],
       "jvmOptions": []
     }

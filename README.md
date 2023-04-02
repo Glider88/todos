@@ -7,13 +7,9 @@ Start postrges:
     docker run -it \
     -e POSTGRES_USER=pavel \
     -e POSTGRES_PASSWORD=pass \
-    -e POSTGRES_DB=test \
+    -e POSTGRES_DB=todo \
     -p 5432:5432 \
     postgres
-
-Initialize database schema:
-
-    sbt "run-db-migrations migrate"
 
 Start webserver:
 

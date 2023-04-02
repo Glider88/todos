@@ -12,5 +12,18 @@ lazy val migrate = token("migrate")
 lazy val generate = token("generate")
 // Migration Task
 
-addCommandAlias("run-db-migrations", "runMigrate")
+addCommandAlias("migrations", "runMigrate")
 fork / runMigrate := true
+
+  // This prepends the String you would type into the shell
+lazy val startupTransition: State => State = { s: State =>
+  "migrations migrate" :: s
+}
+
+// onLoad is scoped to Global because there's only one.
+Global / onLoad := {
+  val old = (Global / onLoad).value
+  // compose the new transition on top of the existing one
+  // in case your plugins are using this hook.
+  startupTransition compose old
+}

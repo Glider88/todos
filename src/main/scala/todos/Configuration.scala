@@ -31,7 +31,7 @@ object Configuration:
       AppConfig(
         PostgresConfig(
           driver = NonEmptyString.unsafeFrom("org.postgresql.Driver"),
-          url = NonEmptyString.unsafeFrom("jdbc:postgresql:test"),
+          url = NonEmptyString.unsafeFrom("jdbc:postgresql:todo"),
           user = username,
           pass = password
         ),
